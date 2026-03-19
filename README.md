@@ -1,10 +1,10 @@
 # 🏠 House Price Prediction
 
-A machine learning pipeline for the [Kaggle House Prices competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques), achieving a best score of **0.126 RMSLE** (top ~15% on the leaderboard).
+A machine learning pipeline for the [Kaggle House Prices competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques), achieving a best score of **0.126 RMSLE** (top ~23% on the leaderboard).
 
 ## Overview
 
-This project builds an end-to-end ML pipeline to predict residential property sale prices using the Ames Housing dataset. The workflow covers exploratory data analysis, feature engineering, preprocessing, model training, hyperparameter tuning, and submission generation.
+This project builds an end-to-end ML pipeline to predict property sales prices. Using the Ames Housing Dataset, provided on Kaggle, this project covers exploratory data analysis, feature engineering, preprocessing, model training and tuning, and competition submission, with AI assistance where necessary.
 
 ## Project Structure
 ```
@@ -30,39 +30,41 @@ house-price-prediction/
 ## Approach
 
 ### Exploratory Data Analysis
-- Identified high-cardinality and near-constant columns to drop (e.g. `Utilities`, `BsmtHalfBath`)
-- Flagged domain-meaningful missingness (e.g. no garage → `GarageYrBlt` is NaN by design, not error)
-- Confirmed strong right-skew in `SalePrice`, justifying a log transform as the target
+- Identified highly imbalanced or near constant columns to drop (e.g. `Utilities`)
+- Identified domain specific missingness (e.g. `GarageYrBlt` is NaN by when there is no garage, by design)
+- Confirmed strong right-skew in target variable `SalePrice`, justifying a log transform as the target
 
 ### Feature Engineering
-Custom `FeatureEngineer` sklearn transformer (`src/features.py`) applied inside the pipeline:
-- **Type conversions** — `MSSubClass`, `MoSold` cast to string (they are nominal, not ordinal)
-- **Domain-based missing value fills** — categorical NaNs filled with `"None"` where absence is meaningful (e.g. `PoolQC`, `FireplaceQu`)
-- **New features** — `house_age`, `garage_age`, `has_garage`
-- **Binary flags** — `has_second_floor`, `has_pool`, `has_ScreenPorch`, etc.
-- **Column drops** — low-signal and highly skewed features removed
+FeatureEngineer sklearn transformer (`src/features.py`) applied inside the pipeline:
+- **Type conversions** — `MSSubClass`, `MoSold` converted to string as they are nominal, not ordinal
+- **Domain-based missing value fills** — categorical NaNs filled with `"None"` where meaningful (e.g. `PoolQC` when there is no pool)
+- **New features** —  created new features `house_age`, `garage_age`, `has_garage`
+- **Binary conversion** — converted heavily imbalanced features to binary e.g. `has_second_floor`, `has_pool`, `has_ScreenPorch`
+- **Column drops** — low importance and highly skewed features removed
 
 ### Preprocessing
-Separate pipelines for numerical and categorical features via `ColumnTransformer`:
+Separate pipelines for numerical and categorical features with ColumnTransformer:
 - **Numerical** — median imputation + standard scaling
 - **Categorical** — mode imputation + one-hot encoding
 
 ### Models
-Three sklearn-compatible pipelines were trained and evaluated:
+Three pipelines were trained and evaluated:
 
-| Model | CV RMSLE |
+| Model | Kaggle RMSE of  |
 |---|---|
-| Random Forest | — |
-| XGBoost (tuned) | — |
-| LightGBM (tuned) | **0.126** ✅ |
+| Random Forest | 0.14520 |
+| XGBoost (tuned) | 0.13430 |
+| LightGBM (tuned) | **0.12651** |
 
-Hyperparameter tuning was performed using [Optuna](https://optuna.org/) with 50 trials per model, optimising 5-fold cross-validated RMSLE.
+Hyperparameter tuning using Optuna was performed on XGBoost and LightGBM, optimising 5-fold cross-validated scores.
 
 ## Results
 
-Best Kaggle submission: **0.126 RMSLE** using a tuned LightGBM pipeline — placing in approximately the top 15% of the leaderboard.
+Best Kaggle submission: **0.12651 RMSLE** using a tuned LightGBM pipelnie — placing in approximately the top 23% of the leaderboard.
 
-## Requirements
+**Most importantly, gained a lot of understanding of end-to-end ML pipelines.**
+
+## Package requirements
 ```
 numpy
 pandas
@@ -75,13 +77,10 @@ seaborn
 jupyter
 ```
 
-Install with:
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
+## How to run
 
 1. Download the data from [Kaggle](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) and place `train.csv` and `test.csv` in the `data/` folder
-2. Run `notebooks/01_eda.ipynb` to explore the data
-3. Run `notebooks/02_modelling.ipynb` to train models and generate submissions
+2. Download the src folder to the same location as the data folder
+3. Download the notebooks into the same location
+4. Run `notebooks/01_eda.ipynb` to explore the data
+5. Run `notebooks/02_modelling.ipynb` to train models and generate submissions
