@@ -1,6 +1,6 @@
 # 🏠 House Price Prediction
 
-A machine learning pipeline for the [Kaggle House Prices competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques), achieving a best score of **0.126 RMSLE** (top ~23% on the leaderboard).
+A machine learning pipeline for the [Kaggle House Prices competition](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques), achieving a best score of **0.126** RMSE on the log of the Sale Price (top ~23% on the leaderboard).
 
 ## Overview
 
