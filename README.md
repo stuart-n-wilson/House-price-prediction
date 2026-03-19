@@ -50,7 +50,7 @@ Separate pipelines for numerical and categorical features with ColumnTransformer
 ### Models
 Three pipelines were trained and evaluated:
 
-| Model | Kaggle RMSE of  |
+| Model | Kaggle Score  |
 |---|---|
 | Random Forest | 0.14520 |
 | XGBoost (tuned) | 0.13430 |
