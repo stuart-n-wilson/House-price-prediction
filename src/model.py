@@ -37,7 +37,8 @@ def get_model(model_type="random_forest", random_state=42):
             num_leaves=31,
             subsample=0.8,
             colsample_bytree=0.8,
-            random_state=random_state
+            random_state=random_state,
+            verbose=-1
         )
     }
 
