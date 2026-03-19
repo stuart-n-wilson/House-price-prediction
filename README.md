@@ -27,7 +27,7 @@ house-price-prediction/
 └── README.md
 ```
 
-## Approach
+## Methodology
 
 ### Exploratory Data Analysis
 - Identified highly imbalanced or near constant columns to drop (e.g. `Utilities`)
