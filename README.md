@@ -60,7 +60,7 @@ Hyperparameter tuning using Optuna was performed on XGBoost and LightGBM, optimi
 
 ## Results
 
-Best Kaggle submission: **0.12651 RMSLE** using a tuned LightGBM pipelnie — placing in approximately the top 23% of the leaderboard.
+Best Kaggle submission: **0.12651** RMSE of log of Sale Price using a tuned LightGBM pipeline — placing in approximately the top 23% of the leaderboard.
 
 **Most importantly, gained a lot of understanding of end-to-end ML pipelines.**
 
