@@ -11,7 +11,6 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         - Feature creation
         - Binary encoding
         - Column dropping (based on EDA)
-
     """
     def __init__(self):
         pass
